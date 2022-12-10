@@ -42,3 +42,4 @@ watchgod==0.7
 websockets==9.1
 wrapt==1.14.1
 zipp==3.6.0
+uptrace

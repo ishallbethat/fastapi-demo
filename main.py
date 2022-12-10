@@ -1,11 +1,17 @@
 from typing import Union
-import fastapi
+import uptrace
 from fastapi import FastAPI
 from fastapi_utils.tasks import repeat_every
 from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
 
-app = fastapi.FastAPI()
+app = FastAPI()
 
+uptrace.configure_opentelemetry(
+    # Copy DSN here or use UPTRACE_DSN env var.
+    # dsn="",
+    service_name="fastapi-demo",
+    service_version="1.0.0",
+)
 
 @app.get("/")
 def read_root():
