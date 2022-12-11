@@ -1,4 +1,4 @@
-FROM python:3.8.10-slim
+FROM python:3.10.6-slim-buster
 
 RUN mkdir -p /app
 ADD . /app
