@@ -1,4 +1,4 @@
-FROM uselagoon/python-3.9
+FROM python:3.8.10-slim
 
 RUN mkdir -p /app
 ADD . /app
