@@ -1,0 +1,35 @@
+name: fastapi-demo
+
+# The build section defines how to build the images of your development environment
+# More info: https://www.okteto.com/docs/reference/manifest/#build
+build:
+
+  # You can use the following env vars to refer to this image in your deploy commands:
+  #  - OKTETO_BUILD_FASTAPI_DEMO_REGISTRY: image registry
+  #  - OKTETO_BUILD_FASTAPI_DEMO_REPOSITORY: image repo
+  #  - OKTETO_BUILD_FASTAPI_DEMO_IMAGE: image name
+  #  - OKTETO_BUILD_FASTAPI_DEMO_SHA: image tag sha256
+  fastapi-demo:
+    context: .
+    image: gabrielwu/fastapi-demo
+
+deploy:
+  - name: deploy fastapi-demo
+    command: helm upgrade --install fastapi-demo chart --set image.pullPolicy=Always --set image.repository="${OKTETO_BUILD_FASTAPI_DEMO_REPOSITORY}:${OKTETO_BUILD_FASTAPI_DEMO_IMAGE}" --set image.tag=${OKTETO_BUILD_FASTAPI_DEMO_SHA:latest}
+
+# The dependencies section defines other git repositories to be deployed as part of your development environment
+# More info: https://www.okteto.com/docs/reference/manifest/#dependencies
+# dependencies:
+#   - https://github.com/okteto/sample
+# The dev section defines how to activate a development container
+# More info: https://www.okteto.com/docs/reference/manifest/#dev
+dev:
+  fastapi-demo:
+    autocreate: true
+    command: bash
+    workdir: /app
+    sync:
+      - .:/app
+    forward:
+      - 18000:8000
+
